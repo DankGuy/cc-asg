@@ -1,0 +1,6 @@
+customhost = "cc-assg.c9pulvddhfux.us-east-1.rds.amazonaws.com"
+customuser = "aws_user"
+custompass = "Bait3273"
+customdb = "assg"
+custombucket = "chongxinyi-bucket"
+customregion = "us-east-1"
