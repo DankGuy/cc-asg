@@ -19,6 +19,7 @@ db_conn = mysql.connector.connect(
 output = {}
 table = 'employee'
 
+
 @app.route("/", methods=['GET', 'POST'])
 def home():
     return render_template('index.html')
@@ -28,13 +29,62 @@ def home():
 def about():
     return render_template('www.tarc.edu.my')
 
-@app.route("/student")
-def student():
-    return render_template('student.html')
+
+@app.route("/studentLoginPage")
+def studentLoginPage(msg=""):
+    return render_template('studentLogin.html', msg=msg)
+
+@app.route("/studentLogin", methods=['GET'])
+def studentLogin():
+    id = request.args.get('id')
+    password = request.args.get('password')
+
+    cursor = db_conn.cursor()
+    cursor.execute('SELECT * FROM student WHERE id = %s', (id,))
+    account = cursor.fetchone()
+
+    if account:
+        if password == account[3]:
+            return redirect(url_for('student', id=id))
+        else:
+            msg = 'Account exists but password incorrect'
+            return redirect(url_for('studentLogin', msg=msg))
+    else:
+        msg = 'Account does not exist'
+        return redirect(url_for('studentLogin', msg=msg))
+    
+@app.route("/student/<id>", methods=['GET'])
+def student(id):
+    cursor = db_conn.cursor()
+    cursor.execute('SELECT * FROM student WHERE id = %s', (id,))
+    account = cursor.fetchone()
+    cursor.execute('SELECT * FROM supervisor')
+    supervisor = cursor.fetchall()
+    
+    # Get the success message from the query parameters
+    success_message = request.args.get('success_message', None)
+
+    return render_template('student.html', account=account, supervisors=supervisor, success_message=success_message)
+
+@app.route("/select-supervisor", methods=['POST'])
+def selectSupervisor():
+    id = request.form['id']
+    supervisor = request.form['supervisor']
+    cursor = db_conn.cursor()
+    cursor.execute('UPDATE student SET supervisor_id = %s WHERE id = %s', (supervisor, id))
+    db_conn.commit()
+    
+    # Set a success message
+    success_message = "Supervisor selection was successful!"
+    
+    # Redirect to the student page with the success message as a query parameter
+    return redirect(url_for('student', id=id, success_message=success_message))
+
 
 @app.route("/adminLogin")
 def adminLogin(msg=""):
-    return render_template('adminLogin.html', msg=msg)
+    return render_template('admin-login.html', msg=msg)
+
 
 @app.route("/login", methods=['GET'])
 def login():
@@ -52,7 +102,7 @@ def login():
     account = cursor.fetchone()
 
     # Console log for debugging
-    print(account) # If account not exists, account = None
+    print(account)  # If account not exists, account = None
 
     # If account exists in accounts table in out database
     if account:
@@ -68,7 +118,7 @@ def login():
     else:
         msg = 'Account does not exists'
         return redirect(url_for('adminLogin', msg=msg))
-    
+
 
 @app.route("/xy")
 def xyPortfolio():

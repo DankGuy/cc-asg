@@ -1,9 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student | TARUMT</title>
-  </head>
-  <body></body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css/') }}" rel="stylesheet" />
+  <!-- Favicon -->
+  <link href="{{ url_for('static', filename='img/logo.png/') }}" rel="icon" />
+  <title>Student | TARUMT</title>
+</head>
+
+<body>
+
+  <body>
+    <header class="bg-primary text-white text-center py-4">
+      <h1 class="h4">Welcome, {{ account[1] }}</h1>
+    </header>
+
+    {% if success_message %}
+    <!-- Toast Message -->
+    <div class="toast position-fixed top-0 start-50 translate-middle-x" role="alert" aria-live="assertive"
+      aria-atomic="true" style="z-index: 1000">
+      <div class="toast-header bg-success text-white">
+        <strong class="me-auto">Success</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">{{ success_message }}</div>
+    </div>
+    {% endif %}
+
+    <div class="container my-4">
+      <h2>Select Your Supervisor</h2>
+      <form method="POST" action="/select-supervisor">
+        <input type="hidden" name="id" value="{{ account[0] }}" />
+        <div class="mb-3">
+          <label for="supervisor" class="form-label">Choose a Supervisor:</label>
+          <select name="supervisor" id="supervisor" class="form-select" {% if not account[8] or not edit_clicked %} disabled {% endif %}>
+            {% for supervisor in supervisors %}
+            <option value="{{ supervisor[0] }}" {% if account[8]==supervisor[0] %} selected {% endif %}>
+              {{ supervisor[2] }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        {% if account[8] %}
+        <button id="edit-supervisor" class="btn btn-primary text-white">Edit</button>
+        <button type="submit" class="btn btn-primary text-white" disabled>Select Supervisor</button>
+        {% endif %}
+      </form>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='lib/wow/wow.min.js/') }}"></script>
+    <script src="{{ url_for('static', filename='lib/easing/easing.min.js/') }}"></script>
+    <script src="{{ url_for('static', filename='lib/waypoints/waypoints.min.js/') }}"></script>
+    <script src="{{ url_for('static', filename='lib/counterup/counterup.min.js/') }}"></script>
+    <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js/') }}"></script>
+    <script src="{{ url_for('static', filename='lib/isotope/isotope.pkgd.min.js/') }}"></script>
+    <script src="{{ url_for('static', filename='lib/lightbox/js/lightbox.min.js/') }}"></script>
+    <script>
+      // JavaScript to enable the edit button and the "Select Supervisor" button
+      document.addEventListener("DOMContentLoaded", function () {
+        var editBtn = document.getElementById("edit-supervisor");
+        var supervisorSelect = document.getElementById("supervisor");
+        var selectSupervisorBtn = document.querySelector("button[type='submit']");
+
+        editBtn.addEventListener("click", function (event) {
+          event.preventDefault();
+          supervisorSelect.removeAttribute("disabled");
+          selectSupervisorBtn.removeAttribute("disabled");
+        });
+      });
+    </script>
+  </body>
+
 </html>
