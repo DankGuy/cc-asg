@@ -1,55 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Customized Bootstrap Stylesheet -->
+    <link
+      href="{{ url_for('static', filename='css/bootstrap.min.css/') }}"
+      rel="stylesheet"
+    />
+    <!-- Favicon -->
+    <link href="{{ url_for('static', filename='img/logo.png/') }}" rel="icon" />
+    <title>Student | TARUMT</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Customized Bootstrap Stylesheet -->
-  <link href="{{ url_for('static', filename='css/bootstrap.min.css/') }}" rel="stylesheet" />
-  <!-- Favicon -->
-  <link href="{{ url_for('static', filename='img/logo.png/') }}" rel="icon" />
-  <title>Student | TARUMT</title>
-</head>
+    <!-- Favicon -->
+    <link href="{{ url_for('static', filename='img/logo.png/') }}" rel="icon" />
 
-<body>
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/boxicons/boxicons/css/boxicons.min.css">
+
+    <!-- Icon Font Stylesheet -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link
+      href="{{ url_for('static', filename='lib/animate/animate.min.css/') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='lib/owlcarousel/assets/owl.carousel.min.css/') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='lib/lightbox/css/lightbox.min.css/') }}"
+      rel="stylesheet"
+    />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link
+      href="{{ url_for('static', filename='css/bootstrap.min.css/') }}"
+      rel="stylesheet"
+    />
+
+    <!-- Template Stylesheet -->
+    <link
+      href="{{ url_for('static', filename='css/style.css/') }}"
+      rel="stylesheet"
+    />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <style>
+.uploadWrapper {
+    display: flex;
+    gap: 10px; /* Space between the label and button */
+  }
+
+  .uploadLabel {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f0f0f0; /* Light grey background */
+    color: black; /* Black text */
+    cursor: pointer;
+    text-align: center;
+    width: 250px; /* Set width as per your requirement */
+    box-sizing: border-box;
+    border: none;
+    margin-bottom: 10px;
+  }
+
+  .uploadLabel:hover {
+    background-color: #d0d0d0; /* Slightly darker grey for hover effect */
+  }
+
+  .uploadBtn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ab7442; /* Custom brown background */
+    color: white; /* White text */
+    cursor: pointer;
+    text-align: center;
+    width: 150px; /* Set width as per your requirement */
+    box-sizing: border-box;
+    border: none;
+    margin-bottom: 10px;
+  }
+
+  .uploadBtn:hover {
+    background-color: #996633; /* Slightly darker brown for hover effect */
+  }
+
+  .fileName {
+    margin-left: 10px;
+    margin-top: 2px;
+    font-style: italic;
+}
+
+    </style>
+  </head>
 
   <body>
-    <header class="bg-primary text-white text-center py-4">
-      <h1 class="h4">Welcome, {{ account[1] }}</h1>
-    </header>
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
+      <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <h2 class="m-0 text-primary">TARUMT ITP</h2>
+      </a>
+      <button
+        type="button"
+        class="navbar-toggler me-4"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarCollapse"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+          <a href="/student/{{ account[0] }}" class="nav-item nav-link">Home</a>
+        </div>
+        <a
+          href="/studentProfile/{{ account[0] }}"
+          class="btn btn-primary py-4 px-lg-5 d-none d-lg-block"
+          >Profile<i class="fa fa-user ms-3"></i
+        ></a>
+      </div>
+    </nav>
+    <!-- Navbar End -->
 
     {% if success_message %}
     <!-- Toast Message -->
-    <div class="toast position-fixed top-0 start-50 translate-middle-x" role="alert" aria-live="assertive"
-      aria-atomic="true" style="z-index: 1000">
+    <div
+      class="toast position-fixed top-0 start-50 translate-middle-x"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      style="z-index: 1000"
+    >
       <div class="toast-header bg-success text-white">
         <strong class="me-auto">Success</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="toast-body">{{ success_message }}</div>
     </div>
     {% endif %}
 
+    <div
+      class="bg-light"
+      style="height: calc(-150vh + 75px); width: 100%; overflow: scroll"
+    >
+      <h1 style="margin-top: 30px; margin-left: 50px; margin-bottom: 30px">
+        Select Supervisor
+      </h1>
+    </div>
+
     <div class="container my-4">
-      <h2>Select Your Supervisor</h2>
       <form method="POST" action="/select-supervisor">
         <input type="hidden" name="id" value="{{ account[0] }}" />
         <div class="mb-3">
-          <label for="supervisor" class="form-label">Choose a Supervisor:</label>
-          <select name="supervisor" id="supervisor" class="form-select" {% if not account[8] or not edit_clicked %} disabled {% endif %}>
-            {% for supervisor in supervisors %}
-            <option value="{{ supervisor[0] }}" {% if account[8]==supervisor[0] %} selected {% endif %}>
-              {{ supervisor[2] }}
-            </option>
+          <label for="supervisor" class="form-label"
+            >Choose a Supervisor:</label
+          >
+          <select
+            name="supervisor"
+            id="supervisor"
+            class="form-select"
+            {%
+            if
+            account[9]
+            %}
+            disabled
+            {%
+            endif
+            %}
+          >
+            <option value="" selected disabled hidden>Choose here</option>
+            <!-- If supervisor selected -->
+            {% if account[9] %} {% for supervisor in supervisors %}
+            <option value="{{ account[9] }}" selected>{{ supervisor[2] }}</option>
             {% endfor %}
+            {% else %} {% for supervisor in supervisors %}
+            <option value="{{ supervisor[0] }}">{{ supervisor[2] }}</option>
+            {% endfor %} {% endif %}
           </select>
         </div>
-        {% if account[8] %}
-        <button id="edit-supervisor" class="btn btn-primary text-white">Edit</button>
-        <button type="submit" class="btn btn-primary text-white" disabled>Select Supervisor</button>
-        {% endif %}
+        {% if not account[9] %}
+        <button type="submit" class="btn btn-primary text-white" id="supervisorBtn">
+          Select Supervisor
+        </button>
+        {% endif %} {% if account[9] %}
+        <button type="submit" class="btn btn-primary text-white" id="supervisorBtn" disabled>
+          Selected
+        </button>
+        {% endif %} {% if not account[9] %} {% endif %}
       </form>
     </div>
+
+    <div class="container my-4">
+      <form method="POST" action="/select-company">
+        <input type="hidden" name="id" value="{{ account[0] }}" />
+        <div class="mb-3">
+          <label for="company" class="form-label"
+            >Choose a Company:</label
+          >
+          <select
+            name="company"
+            id="company"
+            class="form-select"
+            {%
+            if
+            account[8]
+            %}
+            disabled
+            {%
+            endif
+            %}
+          >
+            <option value="" selected disabled hidden>Choose here</option>
+            <!-- If company selected -->
+            {% if account[8] %} {% for company in companies %}
+            <option value="{{ account[8] }}" selected>{{ company[1] }}</option>
+            {% endfor %}
+            {% else %} {% for company in companies %}
+            <option value="{{ company[0] }}">{{ company[1] }}</option>
+            {% endfor %} {% endif %}
+          </select>
+        </div>
+        {% if not account[8] %}
+        <button type="submit" class="btn btn-primary text-white" id="companyBtn">
+          Select Company
+        </button>
+        {% endif %} {% if account[8] %}
+        <button type="submit" class="btn btn-primary text-white"id="companyBtn" disabled>
+          Selected
+        </button>
+        {% endif %} {% if not account[8] %} {% endif %}
+      </form>
+    </div>
+
+    <div class="container my-4">
+      <div class="uploadButton">
+        <form action="/uploadResume/{{account[0]}}" method="POST" enctype="multipart/form-data">
+          <input type="file" name="file" id="fileInput1" style="display: none;" value="{{ account[0] }}">
+          <div class="uploadWrapper">
+            <label for="fileInput1" class="uploadLabel">
+              <i class='bx bx-upload'></i> Choose Resume
+            </label>
+            <button type="submit" class="uploadBtn" id="resumeUploadBtn">Upload</button>
+            <span id="resumeFileName" class="fileName"></span>
+          </div>
+        </form>
+      
+        <form action="/uploadProgressReport/{{account[0]}}" method="POST" enctype="multipart/form-data">
+          <input type="file" name="file" id="fileInput2" style="display: none;" value="{{ account[0] }}">
+          <div class="uploadWrapper">
+            <label for="fileInput2" class="uploadLabel">
+              <i class='bx bx-upload'></i> Choose Progress Report
+            </label>
+            <button type="submit" class="uploadBtn" id="reportUploadBtn">Upload</button>
+            <span id="progressReportFileName" class="fileName"></span>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+    
+    
+    
+    
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -61,20 +295,75 @@
     <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js/') }}"></script>
     <script src="{{ url_for('static', filename='lib/isotope/isotope.pkgd.min.js/') }}"></script>
     <script src="{{ url_for('static', filename='lib/lightbox/js/lightbox.min.js/') }}"></script>
-    <script>
-      // JavaScript to enable the edit button and the "Select Supervisor" button
-      document.addEventListener("DOMContentLoaded", function () {
-        var editBtn = document.getElementById("edit-supervisor");
-        var supervisorSelect = document.getElementById("supervisor");
-        var selectSupervisorBtn = document.querySelector("button[type='submit']");
 
-        editBtn.addEventListener("click", function (event) {
+    <!-- Template Javascript -->
+    <script src="{{ url_for('static', filename='js/main.js/') }}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var editBtn = document.getElementById('edit-supervisor');
+        var supervisorSelect = document.getElementById('supervisor');
+        var selectSupervisorBtn = document.getElementById('supervisorBtn');
+        
+        var editBtn1 = document.getElementById('edit-company');
+        var companySelect = document.getElementById('company');
+        var selectCompanyBtn = document.getElementById('companyBtn');
+      
+        editBtn.addEventListener('click', function (event) {
           event.preventDefault();
-          supervisorSelect.removeAttribute("disabled");
-          selectSupervisorBtn.removeAttribute("disabled");
+          supervisorSelect.removeAttribute('disabled');
+          selectSupervisorBtn.removeAttribute('disabled');
+        });
+      
+        editBtn1.addEventListener('click', function (event) {
+          event.preventDefault();
+          companySelect.removeAttribute('disabled');
+          selectCompanyBtn.removeAttribute('disabled');
         });
       });
-    </script>
-  </body>
+      document.addEventListener('DOMContentLoaded', function () {
+    // Elements
+    var resumeFileInput = document.getElementById('fileInput1');
+    var resumeFileNameSpan = document.getElementById('resumeFileName');
+    var progressReportFileInput = document.getElementById('fileInput2');
+    var progressReportFileNameSpan = document.getElementById('progressReportFileName');
 
+    var supervisorSelect = document.getElementById('supervisor');
+    var companySelect = document.getElementById('company');
+
+    var uploadResumeBtn = document.getElementById('resumeUploadBtn');
+    var uploadProgressReportBtn = document.getElementById('reportUploadBtn');
+
+    // Event Listener to display the selected resume file name
+    resumeFileInput.addEventListener('change', function () {
+        var fileName = resumeFileInput.files.length > 0 ? resumeFileInput.files[0].name : '';
+        resumeFileNameSpan.textContent = fileName;
+    });
+
+    // Event Listener to display the selected progress report file name
+    progressReportFileInput.addEventListener('change', function () {
+        var fileName = progressReportFileInput.files.length > 0 ? progressReportFileInput.files[0].name : '';
+        progressReportFileNameSpan.textContent = fileName;
+    });
+
+    function updateUploadButtons() {
+        var supervisorSelected = supervisorSelect.value !== "";
+        var companySelected = companySelect.value !== "";
+
+        // Update the buttons based on the selections
+        uploadResumeBtn.disabled = !supervisorSelected;
+        uploadProgressReportBtn.disabled = !(supervisorSelected && companySelected);
+
+        uploadResumeBtn.style.backgroundColor = supervisorSelected ? '#ab7442' : '#d0d0d0';
+        uploadProgressReportBtn.style.backgroundColor = (supervisorSelected && companySelected) ? '#ab7442' : '#d0d0d0';
+    }
+
+    supervisorSelect.addEventListener('change', updateUploadButtons);
+    companySelect.addEventListener('change', updateUploadButtons);
+    
+    updateUploadButtons();  // To set initial states
+});
+
+     
+      </script>
+  </body>
 </html>
